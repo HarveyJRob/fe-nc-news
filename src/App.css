@@ -1,38 +1,253 @@
-.App {
-  text-align: center;
+/* Google font: Nova Round */
+
+@import url("https://fonts.googleapis.com/css2?family=Nova+Round&display=swap");
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 {
+  font-size: 18px;
+}
+.material-icons.md-24 {
+  font-size: 24px;
+}
+.material-icons.md-36 {
+  font-size: 36px;
+}
+.material-icons.md-48 {
+  font-size: 48px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark {
+  color: rgba(0, 0, 0, 0.54);
+}
+.material-icons.md-dark.md-inactive {
+  color: rgba(0, 0, 0, 0.26);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light {
+  color: rgba(255, 255, 255, 1);
+}
+.material-icons.md-light.md-inactive {
+  color: rgba(255, 255, 255, 0.3);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/*  Use this font as default */
+body {
+  font-family: "Nova Round", cursive;
+  text-align: left;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.skirting-top {
+  grid-area: skirting-top;
+  background-color: #14274e;
+  border-radius: 10px 10px 0px 0px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.header {
+  grid-area: header;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0px 0px 0px 0px;
+  background-color: #394867;
+}
+.header-image {
+  grid-area: header-image;
+  background-color: #9ba4b4;
+  border-style: solid;
+  border-width: 0px;
+}
+
+.nav-main {
+  grid-area: nav-main;
+}
+.main {
+  grid-area: main;
+  /* display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; */
+  background-color: #14274e;
+  padding-bottom: 20px;
+}
+
+.nav-footer {
+  grid-area: nav-footer;
+  display: flex;
+  justify-content: center;
+  background-color: #9ba4b4;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: #394867;
+}
+
+.skirting-bottom {
+  grid-area: skirting-bottom;
+  background-color: #14274e;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.App__dark {
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+
+.App__light {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: stretch;
+  align-items: stretch;
+  width: 100%;
+  grid-template-columns: minmax(250px, 100%);
+  grid-template-rows: 30px auto auto auto 1fr auto auto 30px;
+  grid-template-areas:
+    "skirting-top"
+    "header"
+    "header-image"
+    "nav-main"
+    "main"
+    "nav-footer"
+    "footer"
+    "skirting-bottom";
+}
+
+@media only screen and (min-width: 600px) {
+  .App__light {
+    width: 100%;
+    grid-template-columns: minmax(50px, auto) minmax(500px, 100%) minmax(50px, auto);
+    grid-template-rows: 30px auto auto auto 1fr auto auto 30px;
+    grid-template-areas:
+      ". skirting-top ."
+      ". header ."
+      ". header-image ."
+      ". nav-main ."
+      ". main ."
+      " . nav-footer ."
+      ". footer ."
+      ". skirting-bottom .";
   }
-  to {
-    transform: rotate(360deg);
+}
+
+.header-logo {
+  padding-left: 10px;
+  font-family: "Nova Round", cursive;
+  font-size: 40px;
+  text-shadow: 3px 3px 0px rgb(113, 173, 212);
+  color: white;
+}
+
+.header-icons {
+  padding: 10px 15px 0px 0px;
+}
+
+/* Navigation Bar Example */
+
+.navigation {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  list-style: none;
+  margin: 0;
+  padding: 0px 0px 0px 0px;
+  background: #394867;
+}
+
+.navigation a {
+  text-decoration: none;
+  display: block;
+  padding: 0.75em;
+  color: white;
+}
+
+.navigation a:hover {
+  background: #14274e;
+}
+
+@media all and (max-width: 600px) {
+  .navigation {
+    justify-content: flex-start;
+    flex-flow: column wrap;
+    padding: 0;
   }
+  .navigation a {
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .navigation li:last-of-type a {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Flex Container Example */
+
+.flex-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.flex-item {
+  width: 250px;
+  background-color: #394867;
+  border-radius: 10px 10px 10px 10px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  list-style: none;
+}
+
+@media all and (max-width: 600px) {
+  .flex-item {
+    width: auto;
+  }
+}
+
+.flex-item img {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #394867;
+}
+
+.flex-item h3 {
+  text-align: center;
+  background-color: #394867;
+  padding: 10px 10px 10px 10px;
+  border-radius: 10px 10px 0px 0px;
+  margin: 0;
+}
+
+.flex-item a {
+  text-decoration: none;
+  color: white;
+}
+
+.flex-item p {
+  background-color: #394867;
+  padding: 5px;
+  margin: 0px;
+  border-radius: 0px 0px 10px 10px;
+}
+
+/*  UserSingle Component */
+
+.userProfile img {
+  width: 100px;
+  border-radius: 10px 10px 10px 10px;
+  margin: 10px;
 }
