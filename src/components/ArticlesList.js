@@ -13,18 +13,21 @@ import Stack from "@mui/material/Stack";
 // Components
 import ArticleCard from "./ArticleCard";
 import ArticlesTopicNav from "./ArticlesTopicNav";
-import ArticlesSortNav from "./ArticlesSortNav";
-import ArticlesPaginationLimit from "./ArticlesPaginationLimit";
+import SortNav from "./SortNav";
+import PaginationLimit from "./PaginationLimit";
+import { ErrorPage } from "./ErrorPage";
 
 // Utils
 import { axiosGetArticlesByTopic } from "../utils/api";
 
 const ArticlesList = () => {
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [articlesList, setArticlesList] = useState([]);
   const [topic, setTopic] = useState();
   const [sortOrder, setSortOrder] = useState();
   const [sortBy, setSortBy] = useState();
+  const [sortByList, setSortByList] = useState(["title", "votes", "topic", "author", "created_at"]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
@@ -32,31 +35,29 @@ const ArticlesList = () => {
 
   const topicFromParams = useParams().topic;
   const location = useLocation();
-  console.log(location);
+
   useEffect(() => {
     setTopic(topicFromParams);
   }, [location]);
 
   useEffect(() => {
-    axiosGetArticlesByTopic(topic, sortOrder, sortBy, page, limit).then((articlesFromApi) => {
-      setArticlesList([...articlesFromApi.articles]);
-      setTotalCount(articlesFromApi.total_count);
-      setPage(articlesFromApi.page);
-      setPageCount(articlesFromApi.pageCount);
-      setIsLoading(false);
-    });
+    axiosGetArticlesByTopic(topic, sortOrder, sortBy, page, limit)
+      .then((articlesFromApi) => {
+        setIsLoading(true);
+        setArticlesList([...articlesFromApi.articles]);
+        setTotalCount(articlesFromApi.total_count);
+        setPage(articlesFromApi.page);
+        setPageCount(articlesFromApi.pageCount);
+        setError(null);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError({ err });
+      });
   }, [topic, sortOrder, sortBy, page, limit]);
-
-  console.log(topic, sortOrder, sortBy, page, limit);
 
   const handlePageChange = (event, value) => {
     setPage(value);
-  };
-
-  const handlePagination = (increment) => {
-    setPage((currPage) => {
-      return currPage + increment;
-    });
   };
 
   if (isLoading) {
@@ -67,14 +68,25 @@ const ArticlesList = () => {
       </main>
     );
   }
+
+  if (error) {
+    return <ErrorPage message={error.err.response.data.msg} status={error.err.response.status} />;
+  }
+
   return (
     <main className="main">
       <h2>
         Article List - <FontAwesomeIcon className="material-icons md-light md-24" icon={faEdit} />
       </h2>
       <ArticlesTopicNav topic={topic} setTopic={setTopic} />
-      <ArticlesSortNav sortOrder={sortOrder} setSortOrder={setSortOrder} sortBy={sortBy} setSortBy={setSortBy} />
-      <ArticlesPaginationLimit limit={limit} setLimit={setLimit} />
+      <SortNav
+        sortByList={sortByList}
+        sortOrder={sortOrder}
+        setSortOrder={setSortOrder}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+      />
+      <PaginationLimit limit={limit} setLimit={setLimit} />
 
       <Stack spacing={2}>
         <Pagination count={pageCount} page={page} onChange={handlePageChange} color="primary" />
@@ -82,7 +94,14 @@ const ArticlesList = () => {
 
       <ul className="flex-container">
         {articlesList.map((article) => {
-          return <ArticleCard key={article.title} article={article} />;
+          return (
+            <ArticleCard
+              key={article.title}
+              article={article}
+              articlesList={articlesList}
+              setArticlesList={setArticlesList}
+            />
+          );
         })}
       </ul>
     </main>

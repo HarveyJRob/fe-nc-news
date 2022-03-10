@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-const ArticlesSortNav = ({ sortOrder, setSortOrder, sortBy, setSortBy }) => {
+const SortNav = ({ sortByList, sortOrder, setSortOrder, sortBy, setSortBy }) => {
   const [sortOrderList, setSortOrderList] = useState(["DESC", "ASC"]);
-  const [sortByList, setSortByList] = useState(["title", "votes", "topic", "author", "created_at"]);
+  //const [sortByList, setSortByList] = useState(["title", "votes", "topic", "author", "created_at"]);
 
   const handleSortOrderChange = (e) => {
     setSortOrder(e.target.value);
@@ -33,4 +33,4 @@ const ArticlesSortNav = ({ sortOrder, setSortOrder, sortBy, setSortBy }) => {
   );
 };
 
-export default ArticlesSortNav;
+export default SortNav;

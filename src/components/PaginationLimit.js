@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ArticlesPaginationLimit = ({ limit, setLimit }) => {
+const PaginationLimit = ({ limit, setLimit }) => {
   const [limitList, setLimitList] = useState([5, 10, 15, 20]);
 
   const handleLimitChange = (e) => {
@@ -18,4 +18,4 @@ const ArticlesPaginationLimit = ({ limit, setLimit }) => {
   );
 };
 
-export default ArticlesPaginationLimit;
+export default PaginationLimit;
