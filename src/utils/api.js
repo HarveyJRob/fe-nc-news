@@ -53,6 +53,12 @@ export const axiosGetArticleByArticleId = (article_id) => {
   });
 };
 
+export const axiosPatchArticleByArticleId = (article_id, body) => {
+  return myApi.patch(`/articles/${article_id}`, body).then((res) => {
+    return res.data;
+  });
+};
+
 export const axiosGetArticlesByTopic = (topic, sortOrder, sortBy, page, limit) => {
   return myApi
     .get(`/articles`, {
@@ -67,4 +73,43 @@ export const axiosGetArticlesByTopic = (topic, sortOrder, sortBy, page, limit) =
     .then((res) => {
       return res.data;
     });
+};
+
+export const axiosDeleteArticleByArticleId = (article_id) => {
+  return myApi.delete(`articles/${article_id}`).then((res) => {
+    return res.data;
+  });
+};
+
+// Comments
+
+export const axiosGetCommentsByArticleId = (article_id, page, limit) => {
+  return myApi
+    .get(`/articles/${article_id}/comments`, {
+      params: {
+        p: page,
+        limit: limit,
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const axiosPostCommentByArticleId = (article_id, body) => {
+  return myApi.post(`/articles/${article_id}/comments`, body).then((res) => {
+    return res.data;
+  });
+};
+
+export const axiosPatchCommentByCommentId = (comment_id, body) => {
+  return myApi.patch(`/comments/${comment_id}`, body).then((res) => {
+    return res.data;
+  });
+};
+
+export const axiosDeleteCommentByCommentId = (comment_id) => {
+  return myApi.delete(`comments/${comment_id}`).then((res) => {
+    return res.data;
+  });
 };

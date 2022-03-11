@@ -39,6 +39,11 @@ body {
   color: white;
 }
 
+a {
+  text-decoration: none;
+  color: white;
+}
+
 .skirting-top {
   grid-area: skirting-top;
   background-color: #14274e;
@@ -62,6 +67,12 @@ body {
 .nav-main {
   grid-area: nav-main;
 }
+
+.nav-breadcrumbs {
+  grid-area: nav-breadcrumbs;
+  background-color: #14274e;
+}
+
 .main {
   grid-area: main;
   /* display: flex;
@@ -103,12 +114,13 @@ body {
   align-items: stretch;
   width: 100%;
   grid-template-columns: minmax(250px, 100%);
-  grid-template-rows: 30px auto auto auto 1fr auto auto 30px;
+  grid-template-rows: 30px auto auto auto auto 1fr auto auto 30px;
   grid-template-areas:
     "skirting-top"
     "header"
     "header-image"
     "nav-main"
+    "nav-breadcrumbs"
     "main"
     "nav-footer"
     "footer"
@@ -119,12 +131,13 @@ body {
   .App__light {
     width: 100%;
     grid-template-columns: minmax(50px, auto) minmax(500px, 100%) minmax(50px, auto);
-    grid-template-rows: 30px auto auto auto 1fr auto auto 30px;
+    grid-template-rows: 30px auto auto auto auto 1fr auto auto 30px;
     grid-template-areas:
       ". skirting-top ."
       ". header ."
       ". header-image ."
       ". nav-main ."
+      ". nav-breadcrumbs ."
       ". main ."
       " . nav-footer ."
       ". footer ."
@@ -244,10 +257,138 @@ body {
   border-radius: 0px 0px 10px 10px;
 }
 
+.flex-item button {
+  background-color: #394867;
+  border: none;
+}
+
 /*  UserSingle Component */
 
 .userProfile img {
   width: 100px;
   border-radius: 10px 10px 10px 10px;
   margin: 10px;
+}
+
+/* ArticleSingle Component */
+
+.article-single {
+  color: #9ba4b4;
+  background-color: #394867;
+  padding: 10px;
+  margin: 10px 10px 0px 10px;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.article-single h2 {
+  border-bottom: 1px solid;
+  margin-bottom: 5px;
+}
+
+.article-single ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.article-single button {
+  background-color: #9ba4b4;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
+}
+
+.comments-list {
+  color: #9ba4b4;
+  background-color: #394867;
+  padding: 10px;
+  margin: 10px 10px 0px 10px;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.comments-list ul {
+  border: 1px solid;
+  border-radius: 10px 10px 10px 10px;
+  list-style: none;
+  margin: 5px;
+  padding: 0px;
+}
+
+.comments-list li {
+  padding: 5px;
+  list-style: none;
+}
+
+.comments-list button {
+  background-color: #9ba4b4;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
+  margin: 10px;
+}
+
+.comments-list button[disabled] {
+  background-color: #9ba4b4;
+  opacity: 0.5;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
+  margin: 10px;
+}
+
+.comments-list textarea {
+  background-color: #9ba4b4;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
+  width: 75%;
+  margin: 10px;
+}
+
+.header-icons button {
+  background-color: #394867;
+  border: none;
+  margin: 5px 5px 5px 5px;
+}
+
+.header-icons img {
+  border-radius: 50%;
+}
+
+/* Form styles from authenitcation course */
+
+.instructions {
+  border-radius: 0.5rem;
+  background: #14274e;
+  color: #fff;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+
+.instructions > svg {
+  margin-right: 0.5rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.hide {
+  display: none;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.invalid {
+  color: red;
+  margin-left: 0.25rem;
+}
+
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
 }

@@ -7,20 +7,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Components
 import UserCard from "./UserCard";
+import { ErrorPage } from "./ErrorPage";
 
 // Utils
 import { axiosGetUsers } from "../utils/api";
 
 const UsersList = () => {
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [usersList, setUsersList] = useState([]);
 
   useEffect(() => {
-    axiosGetUsers().then((usersFromApi) => {
-      setUsersList([...usersFromApi]);
-      setIsLoading(false);
-    });
+    axiosGetUsers()
+      .then((usersFromApi) => {
+        setUsersList([...usersFromApi]);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError({ err });
+      });
   }, []);
+
+  if (error) {
+    return <ErrorPage message={error.err.response.data.msg} status={error.err.response.status} />;
+  }
 
   if (isLoading) {
     return (
