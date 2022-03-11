@@ -17,7 +17,7 @@ import { LoggedInUserContext } from "../contexts/LoggedInUser";
 
 const Header = () => {
   const [show, toggleShow] = useToggle();
-  const { loggedInUser } = useContext(LoggedInUserContext);
+  const { loggedInUser, setLoggedInUser } = useContext(LoggedInUserContext);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [user, setUser] = useState({});
@@ -33,9 +33,19 @@ const Header = () => {
       });
   }, [loggedInUser]);
 
+  useEffect(() => {
+    if (show) {
+      setLoggedInUser();
+    } else {
+      setLoggedInUser("jessjelly");
+    }
+  }, [show]);
+
   return (
     <header className="header">
-      <span className="header-logo">NCN</span>
+      <span className="header-logo">
+        <Link to={`/`}>NCN</Link>
+      </span>
       <span className="header-icons">
         {loggedInUser ? (
           <Link to={`/users/${user.username}`}>

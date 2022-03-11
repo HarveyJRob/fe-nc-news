@@ -1,34 +1,38 @@
 // React
-import { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams, useLocation, useSearchParams } from "react-router-dom";
 
 // fortawesome
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// MUI
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+// Context
+import { LoggedInUserContext } from "../contexts/LoggedInUser";
+
+// Hooks
+import useToggle from "../hooks/useToggle";
 
 // Components
 import ArticleCard from "./ArticleCard";
 import ArticlesTopicNav from "./ArticlesTopicNav";
 import SortNav from "./SortNav";
-import PaginationLimit from "./PaginationLimit";
 import { ErrorPage } from "./ErrorPage";
+import ArticleAdd from "./ArticleAdd";
+import TopicAdd from "./TopicAdd";
 
 // Utils
 import { axiosGetArticlesByTopic } from "../utils/api";
 
 const ArticlesList = () => {
+  const [show, toggleShow] = useToggle();
+  const [showTopicAdd, toggleShowTopicAdd] = useToggle();
+  const { loggedInUser } = useContext(LoggedInUserContext);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isReloading, setIsReloading] = useState(false);
   const [articlesList, setArticlesList] = useState([]);
   const [topic, setTopic] = useState();
-  const [sortOrder, setSortOrder] = useState();
-  const [sortBy, setSortBy] = useState();
-  const [sortByList, setSortByList] = useState(["title", "votes", "topic", "author", "created_at"]);
-  const [limit, setLimit] = useState(10);
+
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [pageCount, setPageCount] = useState(1);
@@ -36,29 +40,30 @@ const ArticlesList = () => {
   const topicFromParams = useParams().topic;
   const location = useLocation();
 
+  const [search, setSearch] = useSearchParams();
+
   useEffect(() => {
     setTopic(topicFromParams);
   }, [location]);
 
   useEffect(() => {
-    axiosGetArticlesByTopic(topic, sortOrder, sortBy, page, limit)
+    setIsLoading(true);
+    axiosGetArticlesByTopic(topic, search.get("sortOrder"), search.get("sortBy"), page, search.get("limit"))
       .then((articlesFromApi) => {
-        setIsLoading(true);
         setArticlesList([...articlesFromApi.articles]);
         setTotalCount(articlesFromApi.total_count);
         setPage(articlesFromApi.page);
         setPageCount(articlesFromApi.pageCount);
         setError(null);
         setIsLoading(false);
+        if (isReloading) {
+          setIsReloading(false);
+        }
       })
       .catch((err) => {
         setError({ err });
       });
-  }, [topic, sortOrder, sortBy, page, limit]);
-
-  const handlePageChange = (event, value) => {
-    setPage(value);
-  };
+  }, [topic, page, search]);
 
   if (isLoading) {
     return (
@@ -75,22 +80,44 @@ const ArticlesList = () => {
 
   return (
     <main className="main">
-      <h2>
-        Article List - <FontAwesomeIcon className="material-icons md-light md-24" icon={faEdit} />
-      </h2>
-      <ArticlesTopicNav topic={topic} setTopic={setTopic} />
-      <SortNav
-        sortByList={sortByList}
-        sortOrder={sortOrder}
-        setSortOrder={setSortOrder}
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-      />
-      <PaginationLimit limit={limit} setLimit={setLimit} />
+      {loggedInUser && (
+        <p>
+          Add an article:{" "}
+          <button className="article-add-toggle" onClick={toggleShow}>
+            {show ? (
+              <FontAwesomeIcon className="material-icons md-light fa-2x" icon={faToggleOff} />
+            ) : (
+              <FontAwesomeIcon className="material-icons md-light fa-2x" icon={faToggleOn} />
+            )}
+          </button>
+        </p>
+      )}
+      {show && <ArticleAdd setIsReloading={setIsReloading} />}
 
-      <Stack spacing={2}>
-        <Pagination count={pageCount} page={page} onChange={handlePageChange} color="primary" />
-      </Stack>
+      {loggedInUser && (
+        <p>
+          Add a topic:{" "}
+          <button className="topic-add-toggle" onClick={toggleShowTopicAdd}>
+            {showTopicAdd ? (
+              <FontAwesomeIcon className="material-icons md-light fa-2x" icon={faToggleOff} />
+            ) : (
+              <FontAwesomeIcon className="material-icons md-light fa-2x" icon={faToggleOn} />
+            )}
+          </button>
+        </p>
+      )}
+      {showTopicAdd && <TopicAdd setIsReloading={setIsReloading} />}
+
+      <ArticlesTopicNav topic={topic} setTopic={setTopic} />
+
+      <SortNav
+        pageCount={pageCount}
+        setPageCount={setPageCount}
+        page={page}
+        setPage={setPage}
+        totalCount={totalCount}
+        setTotalCount={setTotalCount}
+      />
 
       <ul className="flex-container">
         {articlesList.map((article) => {

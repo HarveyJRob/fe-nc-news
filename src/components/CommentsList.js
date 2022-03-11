@@ -5,9 +5,7 @@ import { Link } from "react-router-dom";
 // Components
 import CollapseWrapper from "./CollapseWrapper";
 import { ErrorPage } from "./ErrorPage";
-import CommentVotes from "./CommentVotes";
 import Votes from "./Votes";
-import PaginationLimit from "./PaginationLimit";
 import CommentAdd from "./CommentAdd";
 
 // fortawesome
@@ -54,7 +52,7 @@ const CommentsList = ({ article_id }) => {
       });
   }, [article_id, page, limit, isReloading]);
 
-  const handleDelete = (comment_id) => {
+  const handleCommentDelete = (comment_id) => {
     setCommentsList((currCommentsList) => {
       return [...currCommentsList].filter((comment) => {
         return comment.comment_id !== comment_id;
@@ -91,8 +89,6 @@ const CommentsList = ({ article_id }) => {
       <h3>Comments ({totalCount})</h3>
       <CommentAdd article_id={article_id} setIsReloading={setIsReloading} />
       <CollapseWrapper>
-        <PaginationLimit limit={limit} setLimit={setLimit} />
-
         <Stack spacing={2}>
           <Pagination count={pageCount} page={page} onChange={handlePageChange} color="primary" />
         </Stack>
@@ -105,7 +101,7 @@ const CommentsList = ({ article_id }) => {
                 {/* <CommentVotes comment={comment} commentsList={commentsList} setCommentsList={setCommentsList} /> |{" "} */}
                 <Link to={`/users/${comment.author}`}>{comment.author}</Link> | {formattedDate} |
                 {loggedInUser === comment.author && (
-                  <button onClick={() => handleDelete(comment.comment_id)}>
+                  <button onClick={() => handleCommentDelete(comment.comment_id)}>
                     <FontAwesomeIcon className="material-icons md-light" icon={faTrashAlt} />
                   </button>
                 )}

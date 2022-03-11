@@ -1,18 +1,18 @@
 // React
 import { useState, useEffect, useContext } from "react";
 
-// fortawesome
-import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// Utils
-import { axiosPatchCommentByCommentId, axiosPatchArticleByArticleId } from "../utils/api";
-
 // Context
 import { LoggedInUserContext } from "../contexts/LoggedInUser";
 
 // Components
 import { ErrorPage } from "./ErrorPage";
+
+// Utils
+import { axiosPatchCommentByCommentId, axiosPatchArticleByArticleId } from "../utils/api";
+
+// fortawesome
+import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Votes = ({ resource, votes, id, author }) => {
   const [increment, setIncrement] = useState(0);
@@ -48,15 +48,15 @@ const Votes = ({ resource, votes, id, author }) => {
   }
 
   return (
-    <>
-      <button disabled={increment > 0 || loggedInUser === author} onClick={() => handleIncrement(1)}>
+    <span className="votes">
+      <button disabled={increment > 0 || loggedInUser === author || !loggedInUser} onClick={() => handleIncrement(1)}>
         <FontAwesomeIcon className="material-icons md-light" icon={faThumbsUp} />
       </button>
       {votes + increment}
-      <button disabled={increment < 0 || loggedInUser === author} onClick={() => handleIncrement(-1)}>
+      <button disabled={increment < 0 || loggedInUser === author || !loggedInUser} onClick={() => handleIncrement(-1)}>
         <FontAwesomeIcon className="material-icons md-light" icon={faThumbsDown} />
       </button>
-    </>
+    </span>
   );
 };
 

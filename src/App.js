@@ -1,6 +1,7 @@
 // react
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { QueryParamProvider } from "use-query-params";
 
 // contexts
 import { ThemeContext } from "./contexts/Theme";
@@ -26,7 +27,7 @@ import UserSingle from "./components/UserSingle";
 function App() {
   const [theme, setTheme] = useState("light");
   const [loggedInUser, setLoggedInUser] = useState("jessjelly");
-  // const [loggedInUser, setLoggedInUser] = useState();
+  //const [loggedInUser, setLoggedInUser] = useState();
 
   return (
     <BrowserRouter>
@@ -36,8 +37,8 @@ function App() {
             <div className="skirting-top"></div>
             <Header />
             <Banner />
-            <MainMenu />
             <BreadcrumbsMenu />
+            <MainMenu />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -52,7 +53,7 @@ function App() {
               <Route path="*" element={<ErrorPage />} />
             </Routes>
             <nav className="nav-footer">
-              <ul>
+              {/* <ul>
                 <li>Sections:</li>
                 <li>Home</li>
                 <li>About</li>
@@ -69,11 +70,9 @@ function App() {
                 <li>Theme</li>
                 <li>Language</li>
                 <li>Search</li>
-              </ul>
+              </ul> */}
             </nav>
-            <footer className="footer">
-              © 2022 Rob Harvey. All Rights Reserved - Terms of use | Privacy Policy | Mange Cookies | Modern Slavery |
-            </footer>
+            <footer className="footer">© 2022 Rob Harvey. All Rights Reserved</footer>
             <div className="skirting-bottom"></div>
           </div>
         </ThemeContext.Provider>
