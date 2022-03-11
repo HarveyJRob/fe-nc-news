@@ -55,7 +55,6 @@ const ArticleSingle = () => {
         <ul>
           <li>
             <Votes resource={"article"} votes={article.votes} id={article.article_id} author={article.author} /> |{" "}
-            {/* <ArticleVotes article={article} setArticle={setArticle} /> |{" "} */}
             <Link to={`/users/${article.author}`}>{article.author}</Link> | {article.created_at} | [
             <Link to={`/articles/${article.topic}`}>{article.topic}</Link>] |{" "}
             {loggedInUser === article.author && <FontAwesomeIcon className="material-icons md-light " icon={faEdit} />}
