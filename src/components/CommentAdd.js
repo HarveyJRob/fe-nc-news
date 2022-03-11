@@ -82,14 +82,11 @@ const CommentAdd = ({ article_id, setIsReloading }) => {
   return (
     <>
       {success ? (
-        <section>
-          <h1>Success!</h1>
-          <p>
-            <Link to="/">Home</Link>
-          </p>
+        <section className="comment-add">
+          <h2>Success!</h2>
         </section>
       ) : (
-        <section>
+        <section className="comment-add">
           <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
             {errMsg}
           </p>

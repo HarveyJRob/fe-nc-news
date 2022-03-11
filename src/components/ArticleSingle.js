@@ -2,7 +2,6 @@ import { useEffect, useState, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 
 // Components
-import ArticleVotes from "./ArticleVotes";
 import CommentsList from "./CommentsList";
 import { ErrorPage } from "./ErrorPage";
 import Votes from "./Votes";

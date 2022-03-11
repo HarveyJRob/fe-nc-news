@@ -9,13 +9,13 @@ const MainMenu = () => {
           <Link to="/">HOME</Link>
         </li>
         <li>
-          <Link to="/about">ABOUT</Link>
-        </li>
-        <li>
           <Link to="/articles">ARTICLES</Link>
         </li>
         <li>
           <Link to="/users">USERS</Link>
+        </li>
+        <li>
+          <Link to="/about">ABOUT</Link>
         </li>
       </ul>
     </nav>

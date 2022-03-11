@@ -12,6 +12,12 @@ export const axiosGetTopics = () => {
   });
 };
 
+export const axiosPostTopic = (body) => {
+  return myApi.post(`/topics`, body).then((res) => {
+    return res.data;
+  });
+};
+
 // Users
 
 export const axiosGetUsers = () => {
@@ -42,6 +48,12 @@ export const axiosGetCommentsByUsername = (username) => {
 
 export const axiosGetArticles = () => {
   return myApi.get("/articles").then((res) => {
+    return res.data;
+  });
+};
+
+export const axiosPostArticle = (body) => {
+  return myApi.post(`/articles`, body).then((res) => {
     return res.data;
   });
 };

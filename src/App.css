@@ -64,13 +64,18 @@ a {
   border-width: 0px;
 }
 
-.nav-main {
-  grid-area: nav-main;
+.nav-breadcrumbs {
+  grid-area: header-image;
+  align-self: end;
+  justify-self: stretch;
+  background-color: #9ba4b4;
+  opacity: 0.75;
+  margin: 0px;
+  padding: 10px;
 }
 
-.nav-breadcrumbs {
-  grid-area: nav-breadcrumbs;
-  background-color: #14274e;
+.nav-main {
+  grid-area: nav-main;
 }
 
 .main {
@@ -91,7 +96,10 @@ a {
 
 .footer {
   grid-area: footer;
+  display: flex;
   background-color: #394867;
+  padding: 15px;
+  justify-content: center;
 }
 
 .skirting-bottom {
@@ -114,13 +122,12 @@ a {
   align-items: stretch;
   width: 100%;
   grid-template-columns: minmax(250px, 100%);
-  grid-template-rows: 30px auto auto auto auto 1fr auto auto 30px;
+  grid-template-rows: 30px auto auto auto 1fr auto auto 30px;
   grid-template-areas:
     "skirting-top"
     "header"
     "header-image"
     "nav-main"
-    "nav-breadcrumbs"
     "main"
     "nav-footer"
     "footer"
@@ -131,13 +138,12 @@ a {
   .App__light {
     width: 100%;
     grid-template-columns: minmax(50px, auto) minmax(500px, 100%) minmax(50px, auto);
-    grid-template-rows: 30px auto auto auto auto 1fr auto auto 30px;
+    grid-template-rows: 30px auto auto auto 1fr auto auto 30px;
     grid-template-areas:
       ". skirting-top ."
       ". header ."
       ". header-image ."
       ". nav-main ."
-      ". nav-breadcrumbs ."
       ". main ."
       " . nav-footer ."
       ". footer ."
@@ -155,6 +161,11 @@ a {
 
 .header-icons {
   padding: 10px 15px 0px 0px;
+}
+
+.breadcrumb,
+.breadcrumb:last-child {
+  color: #00ff00;
 }
 
 /* Navigation Bar Example */
@@ -198,6 +209,108 @@ a {
   }
 }
 
+.about {
+  padding: 20px;
+}
+
+.article-add-toggle,
+.topic-add-toggle {
+  background-color: #14274e;
+  border: none;
+}
+
+.article-add,
+.topic-add {
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.article-add label,
+.topic-add label {
+  display: inline-block;
+  vertical-align: center;
+  width: 75px;
+}
+
+.article-add label[for="body"],
+.topic-add label[for="body"] {
+  vertical-align: top;
+}
+
+.article-add input,
+.topic-add input {
+  color: white;
+  width: 200px;
+  border-radius: 5px 5px 5px 5px;
+  background-color: transparent;
+  border: 1px solid;
+  margin: 5px;
+  padding: 10px;
+}
+
+.article-add textarea,
+.topic-add textarea {
+  color: white;
+  height: 50px;
+  width: 200px;
+  border-radius: 5px 5px 5px 5px;
+  background-color: transparent;
+  border: 1px solid;
+  margin: 5px;
+  padding: 10px;
+}
+
+.article-add select,
+.topic-add select {
+  color: white;
+  width: 220px;
+  border-radius: 5px 5px 5px 5px;
+  background-color: transparent;
+  border: 1px solid;
+  margin: 5px;
+  padding: 10px;
+}
+
+.article-add button,
+.topic-add button {
+  background-color: #9ba4b4;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
+  margin: 20px 10px 10px 0px;
+  padding: 5px;
+}
+
+.sort-nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 10px;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.sort-nav span {
+  color: white;
+}
+
+.sort-nav select {
+  color: white;
+  border-radius: 5px 5px 5px 5px;
+  background-color: transparent;
+  margin: 5px;
+  padding: 5px;
+}
+
+.pagination {
+  padding: 2px 0 0 0;
+  margin-right: 10px;
+  background-color: white;
+  opacity: 0.75;
+  border-radius: 10px 10px 10px 10px;
+  border: 1px dotted black;
+}
 /* Flex Container Example */
 
 .flex-container {
@@ -265,9 +378,16 @@ a {
 /*  UserSingle Component */
 
 .userProfile img {
-  width: 100px;
-  border-radius: 10px 10px 10px 10px;
-  margin: 10px;
+  display: inline-block;
+  vertical-align: center;
+  width: 50px;
+  border-radius: 50%;
+  margin: 20px 20px 0px 20px;
+}
+
+.userProfile h2 {
+  display: inline-block;
+  vertical-align: center;
 }
 
 /* ArticleSingle Component */
@@ -291,13 +411,39 @@ a {
   padding: 0;
 }
 
+.votes button {
+  background-color: #9ba4b4;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
+  margin: 10px;
+}
+
+.votes button[disabled] {
+  background-color: #9ba4b4;
+  opacity: 0.5;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
+  margin: 10px;
+}
+
 .article-single button {
   background-color: #9ba4b4;
   border: none;
   border-radius: 3px 3px 3px 3px;
+  margin: 10px;
 }
 
-.comments-list {
+.article-single button[disabled] {
+  background-color: #9ba4b4;
+  opacity: 0.5;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
+  margin: 10px;
+}
+
+.comments-list,
+.user-articles,
+.user-comments {
   color: #9ba4b4;
   background-color: #394867;
   padding: 10px;
@@ -305,7 +451,9 @@ a {
   border-radius: 10px 10px 10px 10px;
 }
 
-.comments-list ul {
+.comments-list ul,
+.user-articles ul,
+.user-comments ul {
   border: 1px solid;
   border-radius: 10px 10px 10px 10px;
   list-style: none;
@@ -313,16 +461,22 @@ a {
   padding: 0px;
 }
 
-.comments-list li {
+.comments-list li,
+.user-articles li,
+.user-comments li {
   padding: 5px;
   list-style: none;
 }
 
-.comments-list button {
-  background-color: #9ba4b4;
-  border: none;
-  border-radius: 3px 3px 3px 3px;
+.comments-list button,
+.user-articles button,
+.user-comments button {
+  color: white;
+  background-color: transparent;
+  border: 1px solid;
+  border-radius: 5px 5px 5px 5px;
   margin: 10px;
+  padding: 10px;
 }
 
 .comments-list button[disabled] {
@@ -338,6 +492,21 @@ a {
   border: none;
   border-radius: 3px 3px 3px 3px;
   width: 75%;
+  margin: 10px;
+}
+
+.comment-add button {
+  background-color: #9ba4b4;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
+  margin: 10px;
+}
+
+.comment-add button[disabled] {
+  background-color: #9ba4b4;
+  opacity: 0.5;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
   margin: 10px;
 }
 

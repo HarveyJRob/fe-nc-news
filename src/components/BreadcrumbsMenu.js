@@ -12,7 +12,7 @@ const BreadcrumbsMenu = () => {
   return (
     <nav className="nav-breadcrumbs">
       <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/">
+        <Link underline="hover" color="black" href="/">
           <HomeIcon sx={{ mr: 0.75 }} fontSize="inherit" />
           Home
         </Link>
@@ -21,11 +21,12 @@ const BreadcrumbsMenu = () => {
           const to = `/${pathnames.slice(0, index + 1).join("/")}`;
 
           return last ? (
-            <Typography key={value} color="GrayText.primary">
+            // <Typography key={value} color="GrayText.primary">
+            <Typography key={value} color="black">
               {value}
             </Typography>
           ) : (
-            <Link key={value} underline="hover" color="inherit" href={to}>
+            <Link key={value} underline="hover" color="black" href={to}>
               {value}
             </Link>
           );
