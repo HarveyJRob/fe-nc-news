@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Utils
 import { axiosGetArticleByArticleId } from "../utils/api";
-import { formatPSQLDateTimeStamp } from "../utils/utils";
+import { formatPSQLDateTimeStamp, displayCreatedAt } from "../utils/utils";
 
 // Context
 import { LoggedInUserContext } from "../contexts/LoggedInUser";
@@ -28,7 +28,8 @@ const ArticleSingle = () => {
   useEffect(() => {
     axiosGetArticleByArticleId(article_id)
       .then((ArticleFromApi) => {
-        setArticle({ ...ArticleFromApi, created_at: formatPSQLDateTimeStamp(ArticleFromApi.created_at) });
+        setArticle({ ...ArticleFromApi, created_at: displayCreatedAt(ArticleFromApi.created_at) });
+        // setArticle({ ...ArticleFromApi, created_at: formatPSQLDateTimeStamp(ArticleFromApi.created_at) });
         setIsLoading(false);
       })
       .catch((err) => {
@@ -55,8 +56,8 @@ const ArticleSingle = () => {
         <ul>
           <li>
             <Votes resource={"article"} votes={article.votes} id={article.article_id} author={article.author} /> |{" "}
-            <Link to={`/users/${article.author}`}>{article.author}</Link> | {article.created_at} | [
-            <Link to={`/articles/${article.topic}`}>{article.topic}</Link>] |{" "}
+            <Link to={`/users/${article.author}`}>{article.author}</Link> | posted {article.created_at}{" "}
+            {console.log(article.created_at)} | [<Link to={`/articles/${article.topic}`}>{article.topic}</Link>] |{" "}
             {loggedInUser === article.author && <FontAwesomeIcon className="material-icons md-light " icon={faEdit} />}
           </li>
         </ul>

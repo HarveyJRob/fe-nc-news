@@ -191,6 +191,10 @@ a {
   background: #14274e;
 }
 
+.nav-active {
+  background: #14274e;
+}
+
 @media all and (max-width: 600px) {
   .navigation {
     justify-content: flex-start;

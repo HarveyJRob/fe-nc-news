@@ -1,6 +1,6 @@
 // react
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // components
 import { ErrorPage } from "./ErrorPage";
@@ -12,6 +12,8 @@ const ArticlesTopicNav = ({ topic, setTopic }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [topicsList, setTopicsList] = useState([]);
+
+  const location = useLocation();
 
   useEffect(() => {
     axiosGetTopics()
@@ -39,12 +41,15 @@ const ArticlesTopicNav = ({ topic, setTopic }) => {
   return (
     <nav>
       <ul className="navigation">
-        <li>
+        <li className={location.pathname === `/articles` ? "nav-active" : "nav-inactive"}>
           <Link to={`/articles`}>all</Link>
         </li>
         {topicsList.map((topic) => {
           return (
-            <li key={topic.slug}>
+            <li
+              key={topic.slug}
+              className={location.pathname.startsWith(`/articles/${topic.slug}`) ? "nav-active" : "nav-inactive"}
+            >
               <Link to={`/articles/${topic.slug}`}>{topic.slug}</Link>
             </li>
           );

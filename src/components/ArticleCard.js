@@ -50,7 +50,6 @@ const ArticleCard = ({ article, articlesList, setArticlesList }) => {
       });
   };
 
-  console.log(typeof article.comment_count);
   return (
     <li className="flex-item">
       <h3>

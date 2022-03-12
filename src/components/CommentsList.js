@@ -18,7 +18,7 @@ import Stack from "@mui/material/Stack";
 
 // Utils
 import { axiosGetCommentsByArticleId, axiosDeleteCommentByCommentId } from "../utils/api";
-import { formatPSQLDateTimeStamp } from "../utils/utils";
+import { formatPSQLDateTimeStamp, displayCreatedAt } from "../utils/utils";
 
 // Context
 import { LoggedInUserContext } from "../contexts/LoggedInUser";
@@ -93,13 +93,12 @@ const CommentsList = ({ article_id }) => {
           <Pagination count={pageCount} page={page} onChange={handlePageChange} color="primary" />
         </Stack>
         {commentsList.map((comment) => {
-          let formattedDate = formatPSQLDateTimeStamp(comment.created_at);
+          let formattedDate = displayCreatedAt(comment.created_at);
           return (
             <ul key={comment.comment_id}>
               <li>
                 <Votes resource={"comment"} votes={comment.votes} id={comment.comment_id} author={comment.author} /> |{" "}
-                {/* <CommentVotes comment={comment} commentsList={commentsList} setCommentsList={setCommentsList} /> |{" "} */}
-                <Link to={`/users/${comment.author}`}>{comment.author}</Link> | {formattedDate} |
+                <Link to={`/users/${comment.author}`}>{comment.author}</Link> | {displayCreatedAt(comment.created_at)} |
                 {loggedInUser === comment.author && (
                   <button onClick={() => handleCommentDelete(comment.comment_id)}>
                     <FontAwesomeIcon className="material-icons md-light" icon={faTrashAlt} />
