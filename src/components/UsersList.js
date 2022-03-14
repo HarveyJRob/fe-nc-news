@@ -18,19 +18,19 @@ const UsersList = () => {
   const [usersList, setUsersList] = useState([]);
 
   useEffect(() => {
+    setIsLoading(true);
     axiosGetUsers()
       .then((usersFromApi) => {
         setUsersList([...usersFromApi]);
+        setError(null);
         setIsLoading(false);
       })
       .catch((err) => {
+        console.log(err.message);
         setError({ err });
+        setIsLoading(false);
       });
   }, []);
-
-  if (error) {
-    return <ErrorPage message={error.err.response.data.msg} status={error.err.response.status} />;
-  }
 
   if (isLoading) {
     return (
@@ -40,12 +40,17 @@ const UsersList = () => {
       </main>
     );
   }
+
+  if (error) {
+    return <ErrorPage message={error.err.response.data.msg} status={error.err.response.status} />;
+  }
+
   return (
     <main className="main">
       <h2>
         User List - <FontAwesomeIcon className="material-icons md-light md-24" icon={faEdit} />
       </h2>
-      <ul className="flex-container">
+      <ul className="users-list">
         {usersList.map((user) => {
           return <UserCard key={user.username} user={user} />;
         })}

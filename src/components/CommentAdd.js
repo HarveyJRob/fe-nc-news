@@ -13,7 +13,7 @@ import { axiosPostCommentByArticleId } from "../utils/api";
 import { LoggedInUserContext } from "../contexts/LoggedInUser";
 
 // REGEX
-const DESC_REGEX = /^[A-z0-9\s']{3,200}$/;
+const DESC_REGEX = /^[a-zA-Z0-9\s!@#€£$%^&*()_+={}[\]:;'"|\\<>?/,.`~-]{3,1000}$/;
 
 const CommentAdd = ({ article_id, setIsReloading }) => {
   const { loggedInUser } = useContext(LoggedInUserContext);
@@ -34,9 +34,11 @@ const CommentAdd = ({ article_id, setIsReloading }) => {
 
   useEffect(() => {
     if (success) {
-      setTimeout(() => {
+      let timer = setTimeout(() => {
         setSuccess(false);
+        timer = null;
       }, 3000);
+      return () => clearTimeout(timer);
     }
   }, [success]);
 
@@ -75,6 +77,12 @@ const CommentAdd = ({ article_id, setIsReloading }) => {
       });
   };
 
+  const onKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === "Escape") {
+      e.target.blur();
+    }
+  };
+
   if (!loggedInUser) {
     return <p ref={userRef}>Log in or sign up to leave a comment</p>;
   }
@@ -82,11 +90,11 @@ const CommentAdd = ({ article_id, setIsReloading }) => {
   return (
     <>
       {success ? (
-        <section className="comment-add">
+        <article className="comment-add">
           <h2>Success!</h2>
-        </section>
+        </article>
       ) : (
-        <section className="comment-add">
+        <article className="comment-add">
           <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
             {errMsg}
           </p>
@@ -109,14 +117,15 @@ const CommentAdd = ({ article_id, setIsReloading }) => {
               aria-describedby="descnote"
               onFocus={() => setDescFocus(true)}
               onBlur={() => setDescFocus(false)}
+              onKeyDown={onKeyDown}
             />
             <p id="descnote" className={descFocus && desc && !validDesc ? "instructions" : "offscreen"}>
-              <FontAwesomeIcon icon={faInfoCircle} />3 to 250 characters.
+              <FontAwesomeIcon icon={faInfoCircle} />3 to 1000 characters.
             </p>
             <br />
             <button disabled={!validDesc || !loggedInUser ? true : false}>Add comment</button>
           </form>
-        </section>
+        </article>
       )}
     </>
   );

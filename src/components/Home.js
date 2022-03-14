@@ -25,19 +25,19 @@ const Home = () => {
   return (
     <main className="main">
       <h2>Most popular...</h2>
-      <ul className="flex-container">
+      <ul className="articles-list">
         {topThree.articlesList.map((article) => {
           return <ArticleCardHome key={article.title} article={article} />;
         })}
       </ul>
       <h2>Least popular...</h2>
-      <ul className="flex-container">
+      <ul className="articles-list">
         {bottomThree.articlesList.map((article) => {
           return <ArticleCardHome key={article.title} article={article} />;
         })}
       </ul>
       <h2>Most recent ...</h2>
-      <ul className="flex-container">
+      <ul className="articles-list">
         {mostRecent.articlesList.map((article) => {
           return <ArticleCardHome key={article.title} article={article} />;
         })}

@@ -18,7 +18,7 @@ import Stack from "@mui/material/Stack";
 
 // Utils
 import { axiosGetCommentsByArticleId, axiosDeleteCommentByCommentId } from "../utils/api";
-import { formatPSQLDateTimeStamp, displayCreatedAt } from "../utils/utils";
+import { displayCreatedAt } from "../utils/utils";
 
 // Context
 import { LoggedInUserContext } from "../contexts/LoggedInUser";
@@ -36,6 +36,7 @@ const CommentsList = ({ article_id }) => {
   const [pageCount, setPageCount] = useState(1);
 
   useEffect(() => {
+    setIsLoading(true);
     axiosGetCommentsByArticleId(article_id, page, limit)
       .then((commentsFromApi) => {
         setCommentsList([...commentsFromApi.comments]);
@@ -49,6 +50,7 @@ const CommentsList = ({ article_id }) => {
       })
       .catch((err) => {
         setError({ err });
+        setIsLoading(false);
       });
   }, [article_id, page, limit, isReloading]);
 
@@ -64,6 +66,7 @@ const CommentsList = ({ article_id }) => {
         console.log(res);
       })
       .catch((err) => {
+        setError(err);
         console.log(err);
       });
   };
@@ -72,16 +75,16 @@ const CommentsList = ({ article_id }) => {
     setPage(value);
   };
 
-  if (error) {
-    return <ErrorPage message={error.err.response.data.msg} status={error.err.response.status} />;
-  }
-
   if (isLoading) {
     return (
       <section className="comments-list">
         <p>...comments are loading</p>
       </section>
     );
+  }
+
+  if (error) {
+    return <ErrorPage message={error.err.response.data.msg} status={error.err.response.status} />;
   }
 
   return (

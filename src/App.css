@@ -1,48 +1,64 @@
 /* Google font: Nova Round */
+/* Add some fallback-fonts */
 
 @import url("https://fonts.googleapis.com/css2?family=Nova+Round&display=swap");
 
-/* Rules for sizing the icon. */
-.material-icons.md-18 {
-  font-size: 18px;
-}
-.material-icons.md-24 {
-  font-size: 24px;
-}
-.material-icons.md-36 {
-  font-size: 36px;
-}
-.material-icons.md-48 {
-  font-size: 48px;
-}
+/*  Global styling */
 
-/* Rules for using icons as black on a light background. */
-.material-icons.md-dark {
-  color: rgba(0, 0, 0, 0.54);
-}
-.material-icons.md-dark.md-inactive {
-  color: rgba(0, 0, 0, 0.26);
-}
-
-/* Rules for using icons as white on a dark background. */
-.material-icons.md-light {
-  color: rgba(255, 255, 255, 1);
-}
-.material-icons.md-light.md-inactive {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-/*  Use this font as default */
 body {
   font-family: "Nova Round", cursive;
   text-align: left;
   color: white;
+  background-color: white;
 }
 
 a {
   text-decoration: none;
   color: white;
 }
+
+/* ThemeContext */
+
+.App__dark,
+.App__light {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: stretch;
+  align-items: stretch;
+  width: 100%;
+  grid-template-columns: minmax(250px, 100%);
+  grid-template-rows: 30px auto auto auto 1fr auto auto 30px;
+  grid-template-areas:
+    "skirting-top"
+    "header"
+    "banner"
+    "nav-main"
+    "main"
+    "nav-footer"
+    "footer"
+    "skirting-bottom";
+}
+
+@media only screen and (min-width: 600px) {
+  .App__dark,
+  .App__light {
+    width: 100%;
+    grid-template-columns: minmax(50px, auto) minmax(500px, 100%) minmax(50px, auto);
+    grid-template-rows: 30px auto auto auto 1fr auto auto 30px;
+    grid-template-areas:
+      ". skirting-top ."
+      ". header ."
+      ". banner ."
+      ". nav-main ."
+      ". main ."
+      " . nav-footer ."
+      ". footer ."
+      ". skirting-bottom .";
+  }
+}
+
+/* Grid Areas */
 
 .skirting-top {
   grid-area: skirting-top;
@@ -54,24 +70,22 @@ a {
   grid-area: header;
   display: flex;
   justify-content: space-between;
-  border-radius: 0px 0px 0px 0px;
+  align-items: center;
   background-color: #394867;
 }
-.header-image {
-  grid-area: header-image;
-  background-color: #9ba4b4;
-  border-style: solid;
-  border-width: 0px;
+
+.banner {
+  grid-area: banner;
+  background-color: #394867;
 }
 
 .nav-breadcrumbs {
-  grid-area: header-image;
+  grid-area: banner;
   align-self: end;
   justify-self: stretch;
   background-color: #9ba4b4;
   opacity: 0.75;
-  margin: 0px;
-  padding: 10px;
+  padding: 5px;
 }
 
 .nav-main {
@@ -80,9 +94,6 @@ a {
 
 .main {
   grid-area: main;
-  /* display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; */
   background-color: #14274e;
   padding-bottom: 20px;
 }
@@ -108,120 +119,86 @@ a {
   border-radius: 0px 0px 10px 10px;
 }
 
-.App__dark {
-  text-align: center;
-  background-color: black;
-  color: white;
-}
-
-.App__light {
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  justify-items: stretch;
-  align-items: stretch;
-  width: 100%;
-  grid-template-columns: minmax(250px, 100%);
-  grid-template-rows: 30px auto auto auto 1fr auto auto 30px;
-  grid-template-areas:
-    "skirting-top"
-    "header"
-    "header-image"
-    "nav-main"
-    "main"
-    "nav-footer"
-    "footer"
-    "skirting-bottom";
-}
-
-@media only screen and (min-width: 600px) {
-  .App__light {
-    width: 100%;
-    grid-template-columns: minmax(50px, auto) minmax(500px, 100%) minmax(50px, auto);
-    grid-template-rows: 30px auto auto auto 1fr auto auto 30px;
-    grid-template-areas:
-      ". skirting-top ."
-      ". header ."
-      ". header-image ."
-      ". nav-main ."
-      ". main ."
-      " . nav-footer ."
-      ". footer ."
-      ". skirting-bottom .";
-  }
-}
+/* Header */
 
 .header-logo {
   padding-left: 10px;
-  font-family: "Nova Round", cursive;
   font-size: 40px;
   text-shadow: 3px 3px 0px rgb(113, 173, 212);
-  color: white;
 }
 
 .header-icons {
-  padding: 10px 15px 0px 0px;
+  display: flex;
+  align-items: center;
 }
 
-.breadcrumb,
-.breadcrumb:last-child {
-  color: #00ff00;
+.header-icons button {
+  background-color: transparent;
+  border: none;
 }
 
-/* Navigation Bar Example */
+.header-icons img {
+  border-radius: 50%;
+}
 
-.navigation {
+/* NavMain */
+
+.nav-main ul {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   list-style: none;
   margin: 0;
-  padding: 0px 0px 0px 0px;
+  padding: 0;
   background: #394867;
 }
 
-.navigation a {
+.nav-main a {
   text-decoration: none;
   display: block;
   padding: 0.75em;
-  color: white;
 }
 
-.navigation a:hover {
+.nav-main a:hover {
   background: #14274e;
 }
 
-.nav-active {
+.nav-main .active {
   background: #14274e;
 }
 
 @media all and (max-width: 600px) {
-  .navigation {
-    justify-content: flex-start;
+  .nav-main ul {
     flex-flow: column wrap;
-    padding: 0;
   }
-  .navigation a {
+
+  .nav-main a {
     text-align: center;
-    padding: 10px;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 
-  .navigation li:last-of-type a {
+  .nav-main li:last-of-type a {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
 }
 
+/* Main - About */
+
 .about {
-  padding: 20px;
+  padding: 1.25em;
 }
+
+/* Main - ArticleList */
 
 .article-add-toggle,
 .topic-add-toggle {
-  background-color: #14274e;
+  background-color: transparent;
   border: none;
 }
+
+/* Main - ArticleList - ArticleAdd */
+/* Main - ArticleList - TopicAdd */
 
 .article-add,
 .topic-add {
@@ -286,6 +263,50 @@ a {
   padding: 5px;
 }
 
+/* Main - ArticleList - TopicNav */
+
+.topic-nav ul {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #394867;
+}
+
+.topic-nav a {
+  text-decoration: none;
+  display: block;
+  padding: 0.75em;
+}
+
+.topic-nav a:hover {
+  background: #14274e;
+}
+
+.topic-nav .active {
+  background: #14274e;
+}
+
+@media all and (max-width: 600px) {
+  .topic-nav ul {
+    flex-flow: column wrap;
+  }
+
+  .topic-nav a {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .topic-nav li:last-of-type a {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Main - ArticleList - SortNav */
+
 .sort-nav {
   display: flex;
   flex-direction: row;
@@ -307,7 +328,7 @@ a {
   padding: 5px;
 }
 
-.pagination {
+.sort-nav .pagination {
   padding: 2px 0 0 0;
   margin-right: 10px;
   background-color: white;
@@ -315,9 +336,12 @@ a {
   border-radius: 10px 10px 10px 10px;
   border: 1px dotted black;
 }
-/* Flex Container Example */
 
-.flex-container {
+/* Main - ArticleList */
+/* Main - UserList */
+
+.articles-list,
+.users-list {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -331,7 +355,11 @@ a {
   list-style: none;
 }
 
-.flex-item {
+/* Main - ArticleList - ArticleCard */
+/* Main - UserList - UserCard*/
+
+.article-card,
+.user-card {
   width: 250px;
   background-color: #394867;
   border-radius: 10px 10px 10px 10px;
@@ -342,19 +370,22 @@ a {
 }
 
 @media all and (max-width: 600px) {
-  .flex-item {
+  .article-card,
+  .user-card {
     width: auto;
   }
 }
 
-.flex-item img {
+.article-card img,
+.user-card img {
   width: 100%;
   padding: 0;
   margin: 0;
   background-color: #394867;
 }
 
-.flex-item h3 {
+.article-card h3,
+.user-card h3 {
   text-align: center;
   background-color: #394867;
   padding: 10px 10px 10px 10px;
@@ -362,24 +393,27 @@ a {
   margin: 0;
 }
 
-.flex-item a {
+.article-card a,
+.user-card a {
   text-decoration: none;
   color: white;
 }
 
-.flex-item p {
+.article-card p,
+.user-card p {
   background-color: #394867;
   padding: 5px;
   margin: 0px;
   border-radius: 0px 0px 10px 10px;
 }
 
-.flex-item button {
+.article-card button,
+.user-card button {
   background-color: #394867;
   border: none;
 }
 
-/*  UserSingle Component */
+/*  Main - UserSingle */
 
 .userProfile img {
   display: inline-block;
@@ -496,7 +530,8 @@ a {
   border: none;
   border-radius: 3px 3px 3px 3px;
   width: 75%;
-  margin: 10px;
+  padding: 10px;
+  /* margin: 10px; */
 }
 
 .comment-add button {
@@ -514,17 +549,9 @@ a {
   margin: 10px;
 }
 
-.header-icons button {
-  background-color: #394867;
-  border: none;
-  margin: 5px 5px 5px 5px;
-}
-
-.header-icons img {
-  border-radius: 50%;
-}
-
-/* Form styles from authenitcation course */
+/* Main - ArticleList - ArticleAdd */
+/* Main - ArticleList - TopicAdd */
+/* Main - ArticleSingle - CommentList - CommentAdd */
 
 .instructions {
   border-radius: 0.5rem;

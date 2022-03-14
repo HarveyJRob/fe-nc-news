@@ -9,12 +9,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Utils
 import { axiosGetTopics, axiosPostArticle } from "../utils/api";
 
+// Hooks
+import { useTopicsList } from "../hooks/useTopicsList";
+
 // Context
 import { LoggedInUserContext } from "../contexts/LoggedInUser";
 
 // REGEX
-const TITLE_REGEX = /^[A-z0-9\s']{3,50}$/;
-const BODY_REGEX = /^[A-z0-9\s']{3,200}$/;
+const TITLE_REGEX = /^[a-zA-Z0-9\s!@#€£$%^&*()_+={}[\]:;'"|\\<>?/,.`~-]{3,150}$/;
+const BODY_REGEX = /^[a-zA-Z0-9\s!@#€£$%^&*()_+={}[\]:;'"|\\<>?/,.`~-]{3,5000}$/;
 
 const ArticleAdd = ({ setIsReloading }) => {
   const { loggedInUser } = useContext(LoggedInUserContext);
@@ -34,7 +37,8 @@ const ArticleAdd = ({ setIsReloading }) => {
   const [validTopic, setValidTopic] = useState(false);
   const [topicFocus, setTopicFocus] = useState(false);
 
-  const [topics, setTopics] = useState([]);
+  const topics = useTopicsList();
+  //const [topics, setTopics] = useState([]);
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
@@ -45,9 +49,11 @@ const ArticleAdd = ({ setIsReloading }) => {
 
   useEffect(() => {
     if (success) {
-      setTimeout(() => {
+      let timer = setTimeout(() => {
         setSuccess(false);
+        timer = null;
       }, 3000);
+      return () => clearTimeout(timer);
     }
   }, [success]);
 
@@ -67,11 +73,11 @@ const ArticleAdd = ({ setIsReloading }) => {
     setErrMsg("");
   }, [title, body, topic]);
 
-  useEffect(() => {
-    axiosGetTopics().then((topicsFromApi) => {
-      setTopics([...topicsFromApi]);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axiosGetTopics().then((topicsFromApi) => {
+  //     setTopics([...topicsFromApi]);
+  //   });
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -103,6 +109,12 @@ const ArticleAdd = ({ setIsReloading }) => {
       });
   };
 
+  const onKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === "Escape") {
+      e.target.blur();
+    }
+  };
+
   if (!loggedInUser) {
     return <p ref={userRef}>Log in or sign up to post an article</p>;
   }
@@ -110,11 +122,11 @@ const ArticleAdd = ({ setIsReloading }) => {
   return (
     <>
       {success ? (
-        <section className="article-add">
+        <article className="article-add">
           <h2>Success!</h2>
-        </section>
+        </article>
       ) : (
-        <section className="article-add">
+        <article className="article-add">
           <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
             {errMsg}
           </p>
@@ -136,9 +148,10 @@ const ArticleAdd = ({ setIsReloading }) => {
               aria-describedby="titlenote"
               onFocus={() => setTitleFocus(true)}
               onBlur={() => setTitleFocus(false)}
+              onKeyDown={onKeyDown}
             />
             <p id="titlenote" className={titleFocus && title && !validTitle ? "instructions" : "offscreen"}>
-              <FontAwesomeIcon icon={faInfoCircle} />3 to 100 characters.
+              <FontAwesomeIcon icon={faInfoCircle} />3 to 150 characters.
             </p>
             <br />
             <label htmlFor="topic">
@@ -147,7 +160,7 @@ const ArticleAdd = ({ setIsReloading }) => {
             </label>
             <select id="topic" onChange={(e) => setTopic(e.target.value)} required>
               <option value=""> -- Select a topic -- </option>
-              {topics.map((topicFromApi) => (
+              {topics.topicsList.map((topicFromApi) => (
                 <option key={topicFromApi.slug} value={topicFromApi.slug}>
                   {topicFromApi.slug}
                 </option>
@@ -171,15 +184,16 @@ const ArticleAdd = ({ setIsReloading }) => {
               aria-describedby="bodynote"
               onFocus={() => setBodyFocus(true)}
               onBlur={() => setBodyFocus(false)}
+              onKeyDown={onKeyDown}
             />
             <p id="bodynote" className={bodyFocus && body && !validBody ? "instructions" : "offscreen"}>
-              <FontAwesomeIcon icon={faInfoCircle} />3 to 250 characters.
+              <FontAwesomeIcon icon={faInfoCircle} />3 to 5000 characters.
             </p>
 
             <br />
             <button disabled={!validTitle || !validBody || !loggedInUser ? true : false}>Add article</button>
           </form>
-        </section>
+        </article>
       )}
     </>
   );

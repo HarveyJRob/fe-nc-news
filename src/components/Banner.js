@@ -15,7 +15,7 @@ const Banner = () => {
     setCurrentBanner(banners[Math.floor(Math.random() * banners.length)]);
   }, [location]);
 
-  return <img className="header-image" src={currentBanner} width="100%" alt="banner" />;
+  return <img className="banner" src={currentBanner} width="100%" alt="banner" />;
 };
 
 export default Banner;

@@ -9,7 +9,7 @@ import {
   axiosDeleteArticleByArticleId,
   axiosDeleteCommentByCommentId,
 } from "../utils/api";
-import { formatPSQLDateTimeStamp } from "../utils/utils";
+import { displayCreatedAt } from "../utils/utils";
 
 // fortawesome
 import { faEdit, faComment, faTrashAlt, faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
@@ -160,12 +160,12 @@ const UserSingle = () => {
         <h3>Authored articles ({userArticles.length})</h3>
         <CollapseWrapper>
           {userArticles.map((article) => {
-            let formattedDate = formatPSQLDateTimeStamp(article.created_at);
             return (
               <ul key={article.article_id}>
                 <li>
                   <Votes resource={"article"} votes={article.votes} id={article.article_id} author={article.author} /> |{" "}
-                  <Link to={`/articles/${article.topic}`}> {article.topic} </Link> | [{formattedDate}] -{" "}
+                  <Link to={`/articles/${article.topic}`}> {article.topic} </Link> | [
+                  {displayCreatedAt(article.created_at)}] -{" "}
                   <Link to={`/article/${article.article_id}`}>
                     <span className="fa-layers fa-2x fa-fw">
                       <FontAwesomeIcon className="material-icons md-light md-24" icon={faComment} />
@@ -189,12 +189,11 @@ const UserSingle = () => {
         <h3>Authored comments ({userComments.length})</h3>
         <CollapseWrapper>
           {userComments.map((comment) => {
-            let formattedDate = formatPSQLDateTimeStamp(comment.created_at);
             return (
               <ul key={comment.comment_id}>
                 <li>
                   <Votes resource={"comment"} votes={comment.votes} id={comment.comment_id} author={comment.author} /> |{" "}
-                  [{formattedDate}]{" "}
+                  [{displayCreatedAt(comment.created_at)}]{" "}
                   {loggedInUser === comment.author && (
                     <button onClick={() => handleCommentDelete(comment.comment_id)}>
                       <FontAwesomeIcon className="material-icons md-light" icon={faTrashAlt} />

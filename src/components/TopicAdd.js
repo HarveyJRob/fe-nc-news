@@ -13,8 +13,8 @@ import { axiosPostTopic } from "../utils/api";
 import { LoggedInUserContext } from "../contexts/LoggedInUser";
 
 // REGEX
-const SLUG_REGEX = /^[A-z0-9\s']{3,50}$/;
-const BODY_REGEX = /^[A-z0-9\s']{3,200}$/;
+const SLUG_REGEX = /^[a-z-]{3,100}$/;
+const BODY_REGEX = /^[a-zA-Z0-9\s!@#€£$%^&*()_+={}[\]:;'"|\\<>?/,.`~-]{3,5000}$/;
 
 const TopicAdd = ({ setIsReloading }) => {
   const { loggedInUser } = useContext(LoggedInUserContext);
@@ -39,9 +39,11 @@ const TopicAdd = ({ setIsReloading }) => {
 
   useEffect(() => {
     if (success) {
-      setTimeout(() => {
+      let timer = setTimeout(() => {
         setSuccess(false);
+        timer = null;
       }, 3000);
+      return () => clearTimeout(timer);
     }
   }, [success]);
 
@@ -84,6 +86,12 @@ const TopicAdd = ({ setIsReloading }) => {
       });
   };
 
+  const onKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === "Escape") {
+      e.target.blur();
+    }
+  };
+
   if (!loggedInUser) {
     return <p ref={userRef}>Log in or sign up to add a topic</p>;
   }
@@ -91,11 +99,11 @@ const TopicAdd = ({ setIsReloading }) => {
   return (
     <>
       {success ? (
-        <section className="topic-add">
+        <article className="topic-add">
           <h2>Success!</h2>
-        </section>
+        </article>
       ) : (
-        <section className="topic-add">
+        <article className="topic-add">
           <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
             {errMsg}
           </p>
@@ -117,9 +125,10 @@ const TopicAdd = ({ setIsReloading }) => {
               aria-describedby="slugnote"
               onFocus={() => setSlugFocus(true)}
               onBlur={() => setSlugFocus(false)}
+              onKeyDown={onKeyDown}
             />
             <p id="slugnote" className={slugFocus && slug && !validSlug ? "instructions" : "offscreen"}>
-              <FontAwesomeIcon icon={faInfoCircle} />3 to 100 characters.
+              <FontAwesomeIcon icon={faInfoCircle} />3 to 100 characters, lowercase letters or - only.
             </p>
             <br />
             <label htmlFor="body">
@@ -138,15 +147,16 @@ const TopicAdd = ({ setIsReloading }) => {
               aria-describedby="bodynote"
               onFocus={() => setBodyFocus(true)}
               onBlur={() => setBodyFocus(false)}
+              onKeyDown={onKeyDown}
             />
             <p id="bodynote" className={bodyFocus && body && !validBody ? "instructions" : "offscreen"}>
-              <FontAwesomeIcon icon={faInfoCircle} />3 to 250 characters.
+              <FontAwesomeIcon icon={faInfoCircle} />3 to 5000 characters.
             </p>
 
             <br />
             <button disabled={!validSlug || !validBody || !loggedInUser ? true : false}>Add topic</button>
           </form>
-        </section>
+        </article>
       )}
     </>
   );

@@ -60,7 +60,6 @@ export const axiosPostArticle = (body) => {
 
 export const axiosGetArticleByArticleId = (article_id) => {
   return myApi.get(`/articles/${article_id}`).then((res) => {
-    console.log(res.data);
     return res.data.article;
   });
 };

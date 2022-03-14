@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const UserCard = ({ user }) => {
   return (
-    <li className="flex-item">
+    <li className="user-card">
       <h3>
         <Link to={`/users/${user.username}`}>{user.username}</Link>
       </h3>

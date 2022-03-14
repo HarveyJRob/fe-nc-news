@@ -51,7 +51,7 @@ const ArticleCard = ({ article, articlesList, setArticlesList }) => {
   };
 
   return (
-    <li className="flex-item">
+    <li className="article-card">
       <h3>
         <Link to={`/article/${article.article_id}`}>{article.title}</Link>
       </h3>

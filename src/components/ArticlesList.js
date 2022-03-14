@@ -1,6 +1,6 @@
 // React
 import { useState, useEffect, useContext } from "react";
-import { useParams, useLocation, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 // fortawesome
 import { faEdit, faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +14,7 @@ import useToggle from "../hooks/useToggle";
 
 // Components
 import ArticleCard from "./ArticleCard";
-import ArticlesTopicNav from "./ArticlesTopicNav";
+import TopicNav from "./TopicNav";
 import SortNav from "./SortNav";
 import { ErrorPage } from "./ErrorPage";
 import ArticleAdd from "./ArticleAdd";
@@ -31,28 +31,28 @@ const ArticlesList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isReloading, setIsReloading] = useState(false);
   const [articlesList, setArticlesList] = useState([]);
-  const [topic, setTopic] = useState();
 
-  const [page, setPage] = useState(1);
+  //const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [pageCount, setPageCount] = useState(1);
 
-  const topicFromParams = useParams().topic;
-  const location = useLocation();
+  const { topic } = useParams();
 
   const [search, setSearch] = useSearchParams();
 
   useEffect(() => {
-    setTopic(topicFromParams);
-  }, [location]);
-
-  useEffect(() => {
     setIsLoading(true);
-    axiosGetArticlesByTopic(topic, search.get("sortOrder"), search.get("sortBy"), page, search.get("limit"))
+    axiosGetArticlesByTopic(
+      topic,
+      search.get("sortOrder"),
+      search.get("sortBy"),
+      search.get("page"),
+      search.get("limit")
+    )
       .then((articlesFromApi) => {
         setArticlesList([...articlesFromApi.articles]);
         setTotalCount(articlesFromApi.total_count);
-        setPage(articlesFromApi.page);
+        //setPage(articlesFromApi.page);
         setPageCount(articlesFromApi.pageCount);
         setError(null);
         setIsLoading(false);
@@ -62,8 +62,9 @@ const ArticlesList = () => {
       })
       .catch((err) => {
         setError({ err });
+        setIsLoading(false);
       });
-  }, [topic, page, search]);
+  }, [topic, search]);
 
   if (isLoading) {
     return (
@@ -108,18 +109,11 @@ const ArticlesList = () => {
       )}
       {showTopicAdd && <TopicAdd setIsReloading={setIsReloading} />}
 
-      <ArticlesTopicNav topic={topic} setTopic={setTopic} />
+      <TopicNav />
 
-      <SortNav
-        pageCount={pageCount}
-        setPageCount={setPageCount}
-        page={page}
-        setPage={setPage}
-        totalCount={totalCount}
-        setTotalCount={setTotalCount}
-      />
+      <SortNav pageCount={pageCount} />
 
-      <ul className="flex-container">
+      <ul className="articles-list">
         {articlesList.map((article) => {
           return (
             <ArticleCard
