@@ -66,8 +66,8 @@ const ArticleSingle = () => {
           <li>
             <Votes resource={"article"} votes={article.votes} id={article.article_id} author={article.author} /> |{" "}
             <Link to={`/users/${article.author}`}>{article.author}</Link> | posted {article.created_at} | [
-            <Link to={`/articles/${article.topic}`}>{article.topic}</Link>] |{" "}
-            {loggedInUser === article.author && <FontAwesomeIcon className="material-icons md-light " icon={faEdit} />}
+            <Link to={`/articles/${article.topic}`}>{article.topic}</Link>]
+            {/* {loggedInUser === article.author && <FontAwesomeIcon className="material-icons md-light " icon={faEdit} />} */}
           </li>
         </ul>
 

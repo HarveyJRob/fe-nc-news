@@ -86,9 +86,9 @@ const ArticlesList = () => {
           Add an article:{" "}
           <button className="article-add-toggle" onClick={toggleShow}>
             {show ? (
-              <FontAwesomeIcon className="material-icons md-light fa-2x" icon={faToggleOff} />
-            ) : (
               <FontAwesomeIcon className="material-icons md-light fa-2x" icon={faToggleOn} />
+            ) : (
+              <FontAwesomeIcon className="material-icons md-light fa-2x" icon={faToggleOff} />
             )}
           </button>
         </p>
@@ -100,9 +100,9 @@ const ArticlesList = () => {
           Add a topic:{" "}
           <button className="topic-add-toggle" onClick={toggleShowTopicAdd}>
             {showTopicAdd ? (
-              <FontAwesomeIcon className="material-icons md-light fa-2x" icon={faToggleOff} />
-            ) : (
               <FontAwesomeIcon className="material-icons md-light fa-2x" icon={faToggleOn} />
+            ) : (
+              <FontAwesomeIcon className="material-icons md-light fa-2x" icon={faToggleOff} />
             )}
           </button>
         </p>

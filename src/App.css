@@ -391,6 +391,18 @@ a {
   padding: 10px 10px 10px 10px;
   border-radius: 10px 10px 0px 0px;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media all and (max-width: 600px) {
+  .article-card h3,
+  .user-card h3 {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: initial;
+  }
 }
 
 .article-card a,
@@ -409,7 +421,18 @@ a {
 
 .article-card button,
 .user-card button {
-  background-color: #394867;
+  color: white;
+  background-color: transparent;
+  border: 1px solid;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.article-card button[disabled],
+.user-card button[disabled] {
+  background-color: #9ba4b4;
+  opacity: 0.5;
   border: none;
 }
 
@@ -517,7 +540,9 @@ a {
   padding: 10px;
 }
 
-.comments-list button[disabled] {
+.comments-list button[disabled],
+.user-articles button[disabled],
+.user-comments button[disabled] {
   background-color: #9ba4b4;
   opacity: 0.5;
   border: none;

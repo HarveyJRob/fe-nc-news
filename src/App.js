@@ -1,6 +1,6 @@
 // react
 import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 
 // contexts
 import { ThemeContext } from "./contexts/Theme";
@@ -50,7 +50,9 @@ function App() {
               <Route path="*" element={<ErrorPage />} />
             </Routes>
             {/* <nav className="nav-footer"></nav> */}
-            <footer className="footer">© 2022 Rob Harvey. All Rights Reserved</footer>
+            <footer className="footer">
+              <Link to={`/about`}>Rob Harvey - Northcoders Portfolio Piece, March 2022</Link>
+            </footer>
             <div className="skirting-bottom"></div>
           </div>
         </ThemeContext.Provider>

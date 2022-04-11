@@ -6,8 +6,8 @@ const About = () => {
       <section className="about">
         <h1>About</h1>
         <p>
-          This site and the associated backend was developed as a portfolio piece whilst undertaking the Northcoders
-          Bootcamp
+          This site (March 2022) and the associated backend (January 2022) were developed as portfolio pieces whilst
+          undertaking the Northcoders Bootcamp:
         </p>
         <p>
           <em>
